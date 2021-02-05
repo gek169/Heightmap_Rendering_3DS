@@ -11,8 +11,13 @@ Thanks, M!
 
 This program demonstrates how to use LibCtru to do graphics alongside SDL driving audio.
 
+Here's a screenshot of an older version of this program which runs on the bottom screen:
 ![Screenshot1](screenshot.jpg)
-This is a video of the effect in a PC version of the demo,
+
+The current version runs in 400x240 on the top screen.
+
+
+This is a gif of the effect in a PC version of the demo,
 found in my CGL repository.
 The effect does not run quite this well on the 3DS, unfortunately.
 ![Video of effect](peek3.gif)
