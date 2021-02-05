@@ -7,7 +7,7 @@ Available to you under the MiT License, except for Strongest.mp3, which is Copyr
 
 Depends: Devkitpro, Libctru, ImageMagick
 
-Thanks, Mark!
+Thanks, M!
 
 This program demonstrates how to use LibCtru to do graphics alongside SDL driving audio.
 
