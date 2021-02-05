@@ -12,7 +12,7 @@
 #include "brew2_bgr.h"
 #define CHAD_API_IMPL
 #include "api.h"
-#define WIDTH 320
+#define WIDTH 400
 #define HEIGHT 240
 #define SCREENBYTES (320*240*3)
 #define MAX(x,y) (x>y?x:y)
@@ -114,7 +114,7 @@ void Render(){
     float ybuffer[WIDTH];
     //for i in range(0, screen_width):
     for(int i = 0; i < WIDTH; i++)
-        ybuffer[i] = HEIGHT;
+        ybuffer[i] = HEIGHT-1;
 
     //# Draw from front to the back (low z coordinate to high z coordinate)
     float dz = 1.0;
@@ -158,7 +158,7 @@ void Render(){
 		}
         //# Go to next line and increase step size when you are far away
         z += dz;
-        dz += 0.05;
+        dz += 0.1;
     }
 }
 
@@ -215,7 +215,7 @@ int main(int argc, char **argv)
 	fsInit();
 	romfsInit();
 	init();ainit();
-	consoleInit(GFX_TOP, NULL);
+	consoleInit(GFX_BOTTOM, NULL);
 	myscandir();
 	//mytrack = lmus("romfs:/WWGW.wav");
 	mytrack = lmus("romfs:/Strongest.mp3");
@@ -233,14 +233,14 @@ int main(int argc, char **argv)
 	printf("\nHeightmaps!\nThanks MR!");
 
 	printf("\n\n<Start>: Exit program.\n");
-	fb = gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, NULL, NULL);
-	gfxSetDoubleBuffering(GFX_BOTTOM, true);
+	fb = gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL);
+	gfxSetDoubleBuffering(GFX_TOP, true);
 	
 	
 
 	//Get the bottom screen's frame buffer
 	
-	ifb = linearAlloc(320 * 240 * 4); //Enough for the bottom screen.
+	ifb = linearAlloc(WIDTH * HEIGHT * 4); //Enough for the bottom screen.
 	if(!ifb) return 1;
 	//Copy our image in the bottom screen's frame buffer
 	//memcpy(fb, brew2_bgr, brew2_bgr_size);
@@ -277,8 +277,8 @@ int main(int argc, char **argv)
 		//Copy our image in the bottom screen's frame buffer
 		//memcpy(fb, ifb, 320*240*3);
 		//memcpy(ifb, brew2_bgr, brew2_bgr_size);
-		fb = gfxGetFramebuffer(GFX_BOTTOM, GFX_LEFT, NULL, NULL);
-		for(int i = 0; i < 320 * 240 * 4; i++)
+		fb = gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL);
+		for(int i = 0; i < WIDTH * HEIGHT * 4; i++)
 			if(i%4 == 1)
 				fb[i] = 235;
 			else if(i%4 == 2)
