@@ -10,9 +10,10 @@ Depends: Devkitpro, Libctru, ImageMagick
 Thanks, M!
 
 This program demonstrates how to use LibCtru to do graphics alongside SDL driving audio.
-
+![Screenshot1](screenshot2.jpg)
 Here's a screenshot of an older version of this program which runs on the bottom screen:
 ![Screenshot1](screenshot.jpg)
+
 
 The current version runs in 400x240 on the top screen.
 
