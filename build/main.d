@@ -79,7 +79,6 @@ main.o: /home/gek/Programming/3ds/templates/hmap/source/main.c \
  /opt/devkitpro/libctru/include/3ds/romfs.h \
  /opt/devkitpro/libctru/include/3ds/font.h \
  /opt/devkitpro/libctru/include/3ds/gdbhio_dev.h \
- /home/gek/Programming/3ds/templates/hmap/build/brew2_bgr.h \
  /home/gek/Programming/3ds/templates/hmap/include/api.h \
  /opt/devkitpro/portlibs/3ds/include/SDL/SDL.h \
  /opt/devkitpro/portlibs/3ds/include/SDL/SDL_main.h \
@@ -191,7 +190,6 @@ main.o: /home/gek/Programming/3ds/templates/hmap/source/main.c \
 /opt/devkitpro/libctru/include/3ds/romfs.h:
 /opt/devkitpro/libctru/include/3ds/font.h:
 /opt/devkitpro/libctru/include/3ds/gdbhio_dev.h:
-/home/gek/Programming/3ds/templates/hmap/build/brew2_bgr.h:
 /home/gek/Programming/3ds/templates/hmap/include/api.h:
 /opt/devkitpro/portlibs/3ds/include/SDL/SDL.h:
 /opt/devkitpro/portlibs/3ds/include/SDL/SDL_main.h:

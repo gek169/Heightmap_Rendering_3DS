@@ -9,7 +9,7 @@
 #include <math.h>
 #include <dirent.h>
 //This include a header containing definitions of our image
-#include "brew2_bgr.h"
+//#include "brew2_bgr.h"
 #define CHAD_API_IMPL
 #include "api.h"
 #define WIDTH 400
