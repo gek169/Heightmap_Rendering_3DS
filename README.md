@@ -21,3 +21,5 @@ This is a gif of the effect in a PC version of the demo,
 found in my CGL repository.
 The effect does not run quite this well on the 3DS, unfortunately.
 ![Video of effect](peek3.gif)
+An alternate version
+![Video of effect](peek4.gif)

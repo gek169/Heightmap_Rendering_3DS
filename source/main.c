@@ -13,6 +13,8 @@
 #define CHAD_API_IMPL
 #include "api.h"
 #define WIDTH 400
+#define OWIDTH 100
+#define RATIO 4
 #define HEIGHT 240
 #define SCREENBYTES (320*240*3)
 #define MAX(x,y) (x>y?x:y)
@@ -33,15 +35,18 @@ struct{
 } camera;
 
 void DrawVerticalLine(u32 x, u32 height, u32 low, u32 col){
-	if(x >= WIDTH || height >= HEIGHT || low >= HEIGHT || low <= height) return;
-	x %= WIDTH;
+	x*=RATIO;
+	if(x >= WIDTH || height >= HEIGHT+1 || low >= HEIGHT+1 || low <= height) return;
 	//low = HEIGHT-1;
 	//printf("\nGot color");
 	height = HEIGHT - height;
 	low = HEIGHT - low;
-	for(u32 i = low; i <= height && i < HEIGHT; i++){
+	for(u32 i = low; i <= height && i < HEIGHT+1; i++){
 		//printf("\nwriting to %d, %d", x,i);
-		((u32*)fb)[i + x * HEIGHT] = col;
+		((u32*)fb)[i + x * HEIGHT] = col; //RATIO = 1
+		((u32*)fb)[i + (x+1) * HEIGHT] = col; //RATIO = 2
+		((u32*)fb)[i + (x+2) * HEIGHT] = col; //RATIO = 3
+		((u32*)fb)[i + (x+3) * HEIGHT] = col; //RATIO = 4
 	}
 	//printf("\noh shit it actually worked");
 }
@@ -111,14 +116,14 @@ void Render(){
     float cosphi = cosf(phi);
     
     //# initialize visibility array. Y position for each column on screen 
-    float ybuffer[WIDTH];
+    float ybuffer[OWIDTH];
     //for i in range(0, screen_width):
-    for(int i = 0; i < WIDTH; i++)
-        ybuffer[i] = HEIGHT-1;
+    for(int i = 0; i < OWIDTH; i++)
+        ybuffer[i] = HEIGHT;
 
     //# Draw from front to the back (low z coordinate to high z coordinate)
     float dz = 1.0;
-    float z = 0.1;
+    float z = 1.0;
     while(z < distance){
         //# Find line on map. This calculation corresponds to a field of view of 90°
         vec3 pleft = {
@@ -134,12 +139,12 @@ void Render(){
         };
 
         //# segment the line
-        float dx = (pright.d[0] - pleft.d[0]) / WIDTH;
-        float dy = (pright.d[1] - pleft.d[1]) / WIDTH;
+        float dx = (pright.d[0] - pleft.d[0]) / OWIDTH;
+        float dy = (pright.d[1] - pleft.d[1]) / OWIDTH;
 
         //# Raster line and draw a vertical line for each segment
         //for i in range(0, screen_width):
-        for(int i = 0; i < WIDTH; i++){
+        for(int i = 0; i < OWIDTH; i++){
         	ivec3 plefti;
         	plefti.d[0] = pleft.d[0];
         	plefti.d[1] = pleft.d[1];
@@ -209,7 +214,7 @@ int main(int argc, char **argv)
 		camera. ang = 3.14159 * 0.5; 
 		camera. horizon = HEIGHT/2;
 		camera. scale_height = 50;
-		camera. distance = 500;
+		camera. distance = 2000;
 	//gfxInitDefault();
 	gfxInit(GSP_RGBA8_OES,GSP_RGBA8_OES,false);
 	fsInit();
@@ -247,14 +252,21 @@ int main(int argc, char **argv)
 
 	// Main loop
 	u32 ox = 0;
+	double t;
 	while (aptMainLoop())
 	{
 		camera.ang+=0.01;
-		if(camera.ang > 2 * 3.14159)
-			camera.ang -= 2*3.14159;
-		camera.p.d[0]+= 2;
-		if(camera.p.d[0] > 1024)
-			camera.p.d[0]-=1024;
+				
+				if(camera.ang > 2 * 3.14159)
+					camera.ang -= 2*3.14159;
+				camera.p.d[0]+= 2;
+				if(camera.p.d[0] > 1024)
+					camera.p.d[0]-=1024;
+				if(ox > 1024) ox -= 1024;
+				t += 16.66666/1000;
+				camera.p.d[2] = 230 + 100 * sinf(1.4 * t);
+				camera.horizon = HEIGHT/2 + 50 * sinf(1.3 * t);
+				if (t > 5000) t-= 5000;
 		//Scan all the inputs. This should be done once for each frame
 		hidScanInput();
 
